@@ -39,6 +39,8 @@ This patched build adds a WeChat-specific preprocessing step so formulas are con
   Marks `data-formula` nodes so the clipper can treat them as math.
 - `extension/content.js`
   Rewrites WeChat formula nodes inside a cloned extraction document before Defuddle runs.
+- `extension/popup.js`
+  Forces display math inside blockquotes and list items onto a single `$$ ... $$` line so Markdown quote markers do not leak into formulas.
 
 Detailed notes live in [docs/PATCHES.md](docs/PATCHES.md).
 

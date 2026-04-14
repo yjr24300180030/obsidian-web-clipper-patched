@@ -33,6 +33,14 @@ File: `extension/manifest.json`
 - Adds `wechat-formula-preprocess.js` to the content-script list.
 - Keeps the patched build as a separate local extension identity.
 
+### 4. Markdown math fallback in quotes and lists
+
+File: `extension/popup.js`
+
+- The clipper's Turndown math rule still decides the final Markdown form.
+- Display math inside `blockquote` or `li` now falls back to a single-line `$$ ... $$`.
+- This avoids Markdown quote markers like `>` being inserted onto separate formula lines.
+
 ## Manual test flow
 
 1. Reload the unpacked extension in `chrome://extensions`.
