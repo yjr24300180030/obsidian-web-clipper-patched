@@ -1,0 +1,70 @@
+{
+   "action": {
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "commands": {
+      "_execute_action": {
+         "description": "__MSG_commandOpenClipper__",
+         "suggested_key": {
+            "default": "Ctrl+Shift+O",
+            "mac": "Command+Shift+O"
+         }
+      },
+      "quick_clip": {
+         "description": "__MSG_commandQuickClip__",
+         "suggested_key": {
+            "default": "Alt+Shift+O",
+            "mac": "Alt+Shift+O"
+         }
+      },
+      "toggle_highlighter": {
+         "description": "__MSG_commandToggleHighlighter__",
+         "suggested_key": {
+            "default": "Alt+Shift+H",
+            "mac": "Alt+Shift+H"
+         }
+      },
+      "toggle_reader": {
+         "description": "__MSG_commandToggleReader__",
+         "suggested_key": {
+            "default": "Alt+Shift+R",
+            "mac": "Alt+Shift+R"
+         }
+      }
+   },
+   "content_scripts": [ {
+      "js": [ "browser-polyfill.min.js", "content.js", "wechat-formula-preprocess.js" ],
+      "matches": [ "http://*/*", "https://*/*" ]
+   } ],
+   "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+   },
+   "default_locale": "en",
+   "description": "Patched local copy of Obsidian Web Clipper with WeChat formula preprocessing.",
+   "homepage_url": "https://obsidian.md/",
+   "host_permissions": [ "\u003Call_urls>", "http://*/*", "https://*/*" ],
+   "icons": {
+      "128": "icons/icon128.png",
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+   },
+   "manifest_version": 3,
+   "name": "Obsidian Web Clipper Patched",
+   "options_ui": {
+      "open_in_tab": true,
+      "page": "settings.html"
+   },
+   "permissions": [ "activeTab", "clipboardWrite", "commands", "contextMenus", "sidePanel", "storage", "scripting", "declarativeNetRequest" ],
+   "side_panel": {
+      "default_path": "side-panel.html"
+   },
+   "version": "1.4.0",
+   "web_accessible_resources": [ {
+      "extension_ids": [ "*" ],
+      "matches": [ "*://*/*" ],
+      "resources": [ "reader.css", "reader-script.js", "browser-polyfill.min.js", "style.css", "side-panel.html", "flatten-shadow-dom.js", "highlighter.css" ]
+   } ]
+}
