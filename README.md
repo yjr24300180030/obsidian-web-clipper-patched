@@ -1,41 +1,49 @@
 # Obsidian Web Clipper Patched
 
-This is a local patched copy of `Obsidian Web Clipper 1.4.0`.
+Patched unpacked build of `Obsidian Web Clipper 1.4.0` with improved formula capture for WeChat Official Account articles.
 
-## What changed
+## Why this repo exists
 
-- Added `wechat-formula-preprocess.js`
-- Registered it in `manifest.json` as an extra content script
-- The script targets `mp.weixin.qq.com` article pages and injects off-screen LaTeX fallback text for nodes with `data-formula`
+The stock clipper often drops formulas on `mp.weixin.qq.com` pages because many formulas are rendered as nested SVG but stored in `data-formula` attributes.
 
-## Why
+This patched build adds a WeChat-specific preprocessing step so formulas are converted into LaTeX-friendly nodes before the existing extraction pipeline turns the page into Markdown.
 
-The stock clipper loses formulas from WeChat Official Account articles because many formulas are stored as:
+## Quick start
 
-- `span[data-formula="..."]`
-- nested inline SVG for display
+1. Clone this repository.
+2. Open `chrome://extensions`.
+3. Enable `Developer mode`.
+4. Click `Load unpacked`.
+5. Select the `extension/` folder from this repository.
 
-The fallback text makes the existing extractor and Markdown conversion pipeline see:
-
-- inline math as `$...$`
-- block math as `$$...$$`
-
-without visibly changing the page.
-
-## How to load it
-
-1. Open `chrome://extensions`
-2. Enable `Developer mode`
-3. Click `Load unpacked`
-4. Select this folder:
+## Repo layout
 
 ```text
-/Users/yijunrong/Library/CloudStorage/OneDrive-个人/数学笔记/tools/obsidian-web-clipper-patched
+.
+├── README.md
+├── docs/
+│   ├── PATCHES.md
+│   └── UPSTREAM.md
+└── extension/
+    ├── manifest.json
+    ├── content.js
+    ├── wechat-formula-preprocess.js
+    └── ...
 ```
+
+## What is patched
+
+- `extension/manifest.json`
+  Loads an extra content script for WeChat formula preprocessing.
+- `extension/wechat-formula-preprocess.js`
+  Marks `data-formula` nodes so the clipper can treat them as math.
+- `extension/content.js`
+  Rewrites WeChat formula nodes inside a cloned extraction document before Defuddle runs.
+
+Detailed notes live in [docs/PATCHES.md](docs/PATCHES.md).
 
 ## Notes
 
-- This is safer than editing the Chrome Web Store installed copy directly.
-- Chrome Web Store auto-updates will not preserve local patches.
-- This patch is aimed at WeChat articles that expose formulas via `data-formula`.
-- The manifest now uses a separate local identity, so it should not override the Chrome Web Store version when loaded unpacked.
+- Load the `extension/` folder, not the repository root.
+- This build uses a separate local extension identity, so it should not replace the Chrome Web Store install.
+- The repository currently contains a patched unpacked build for convenience. See [docs/UPSTREAM.md](docs/UPSTREAM.md) for source notes.
